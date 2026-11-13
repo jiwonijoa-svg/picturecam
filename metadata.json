@@ -1,0 +1,6 @@
+{
+  "name": "빛나는 크리스마스 마을",
+  "description": "어린이박물관 체험부스용 인터랙티브 웹 앱 - 웹캠으로 내가 그린 그림을 스캔하여 살아 움직이는 크리스마스 마을로 소환합니다.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
