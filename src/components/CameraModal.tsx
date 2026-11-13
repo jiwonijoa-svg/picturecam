@@ -607,7 +607,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                     : selectedSample === 'snowman'
                     ? '아기 눈사람'
                     : '크리스마스트리'}{' '}
-                  소환하기
+                  올리기
                 </span>
               </button>
             </div>
@@ -673,8 +673,8 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                 className="phone-modal-cta w-full max-w-md py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
-                <span className="phone-only-inline">소환하기</span>
-                <span className="phone-hide-inline">내가 그린 그림 소환하기</span>
+                <span className="phone-only-inline">올리기</span>
+                <span className="phone-hide-inline">내가 그린 그림 올리기</span>
               </button>
             </div>
           </div>

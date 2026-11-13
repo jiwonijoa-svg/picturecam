@@ -294,7 +294,7 @@ export default function App() {
                 <span className="text-base">2️⃣</span>
                 <div>
                   <strong className="text-white block">웹캠 가이드 박스에 맞추기</strong>
-                  [그림 소환하기]를 누르고 네모난 초록/빨강 점선 박스 안에 그림을 비춥니다.
+                  [그림 올리기]를 누르고 네모난 초록/빨강 점선 박스 안에 그림을 비춥니다.
                 </div>
               </div>
 
