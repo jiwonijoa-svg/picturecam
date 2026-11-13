@@ -319,55 +319,59 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-2xl h-[650px] max-h-[92vh] bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col text-slate-100">
+    <div className="phone-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+      <div className="phone-modal-card relative w-full max-w-2xl h-[650px] max-h-[92vh] bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col text-slate-100">
         {/* 모달 헤더 */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90 shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🎨</span>
-            <h2 className="text-lg font-bold tracking-tight text-white">내가 그린 그림 소환하기</h2>
+        <div className="phone-modal-header flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/90 shrink-0">
+          <div className="phone-modal-title-wrap flex items-center gap-2">
+            <span className="phone-modal-title-emoji text-xl">🎨</span>
+            <h2 className="phone-modal-title text-lg font-bold tracking-tight text-white">
+              <span>그림 올리기</span>
+            </h2>
           </div>
 
           {/* 탭 전환 (카메라 / 샘플 도안 / 직접 그리기) */}
-          <div className="flex items-center gap-1 p-1 bg-slate-800/90 rounded-xl text-xs font-medium">
+          <div className="phone-modal-tabs flex items-center gap-1 p-1 bg-slate-800/90 rounded-xl text-xs font-medium">
             <button
               onClick={() => setActiveTab('camera')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+              className={`phone-modal-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'camera'
                   ? 'bg-rose-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Camera className="w-3.5 h-3.5" />
-              <span>웹캠 찰칵</span>
+              <Camera className="w-3.5 h-3.5 shrink-0" />
+              <span>찰칵</span>
             </button>
             <button
               onClick={() => setActiveTab('samples')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+              className={`phone-modal-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'samples'
                   ? 'bg-rose-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>샘플 도안</span>
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span className="phone-only-inline">샘플도안</span>
+              <span className="phone-hide-inline">샘플 도안</span>
             </button>
             <button
               onClick={() => setActiveTab('draw')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+              className={`phone-modal-tab-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 activeTab === 'draw'
                   ? 'bg-rose-600 text-white shadow-sm'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Palette className="w-3.5 h-3.5" />
-              <span>화면 스케치</span>
+              <Palette className="w-3.5 h-3.5 shrink-0" />
+              <span className="phone-only-inline">스케치</span>
+              <span className="phone-hide-inline">화면 스케치</span>
             </button>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
+            className="phone-modal-close p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
             title="닫기 (ESC)"
           >
             <X className="w-5 h-5" />
@@ -375,11 +379,11 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
         </div>
 
         {/* 친구이름 입력 바 (가로 중앙 배치, 조금 더 크게 확대된 텍스트 및 입력창) */}
-        <div className="px-6 py-3 bg-slate-800/70 border-b border-slate-800 flex items-center justify-center gap-3 shrink-0">
-          <label htmlFor="creator-name-input" className="text-sm sm:text-base font-extrabold text-amber-300 shrink-0 cursor-pointer tracking-tight">
+        <div className="phone-modal-namebar px-6 py-3 bg-slate-800/70 border-b border-slate-800 flex items-center justify-center gap-3 shrink-0">
+          <label htmlFor="creator-name-input" className="phone-modal-name-label text-sm sm:text-base font-extrabold text-amber-300 shrink-0 cursor-pointer tracking-tight">
             친구이름
           </label>
-          <div className="relative w-52 sm:w-56">
+          <div className="phone-modal-name-wrap relative w-52 sm:w-56">
             <input
               id="creator-name-input"
               type="text"
@@ -387,7 +391,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
               onChange={(e) => setCreatorName(e.target.value)}
               placeholder="예: 민준이"
               maxLength={10}
-              className="w-full bg-slate-950/90 border border-slate-700/90 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/30 rounded-xl px-4 py-2 text-sm font-semibold text-white placeholder-slate-500 outline-none transition-all pr-8 text-center shadow-inner"
+              className="phone-modal-name-input w-full bg-slate-950/90 border border-slate-700/90 focus:border-rose-500 focus:ring-2 focus:ring-rose-500/30 rounded-xl px-4 py-2 text-sm font-semibold text-white placeholder-slate-500 outline-none transition-all pr-8 text-center shadow-inner"
             />
             {creatorName && (
               <button
@@ -404,9 +408,9 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
 
         {/* 탭 1: 웹캠 카메라 모드 */}
         {activeTab === 'camera' && (
-          <div className="flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 gap-3.5">
+          <div className="phone-modal-body flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 gap-3.5">
             {/* 메인 스테이지 */}
-            <div className="w-full flex-1 min-h-0 flex flex-col items-center justify-center">
+            <div className="phone-landscape-row w-full flex-1 min-h-0 flex flex-col items-center justify-center">
               {cameraError ? (
                 <div className="w-full max-w-md flex-1 flex flex-col items-center justify-center gap-3 bg-slate-800/60 rounded-2xl p-6 text-center border border-dashed border-rose-500/40">
                   <Camera className="w-10 h-10 text-rose-400 animate-pulse" />
@@ -429,7 +433,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                   </div>
                 </div>
               ) : (
-                <div className="relative w-full max-w-[270px] sm:max-w-[290px] aspect-square bg-black rounded-2xl overflow-hidden shadow-xl border-2 border-slate-700/80 flex items-center justify-center shrink-0">
+                <div className="phone-camera-box relative w-full max-w-[270px] sm:max-w-[290px] aspect-square bg-black rounded-2xl overflow-hidden shadow-xl border-2 border-slate-700/80 flex items-center justify-center shrink-0">
                   {/* 실시간 웹캠 비디오 (거울 모드: scaleX(-1)) */}
                   <video
                     ref={videoRef}
@@ -443,7 +447,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                   <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none p-3">
                     <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
-                    <div className="relative w-48 h-48 sm:w-52 sm:h-52 rounded-3xl border-4 border-dashed border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.6)] z-10 flex items-center justify-center bg-transparent">
+                    <div className="phone-camera-guide relative w-48 h-48 sm:w-52 sm:h-52 rounded-3xl border-4 border-dashed border-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.6)] z-10 flex items-center justify-center bg-transparent">
                       <div className="absolute -top-2.5 -left-2.5 w-5 h-5 border-t-4 border-l-4 border-rose-500 rounded-tl-lg" />
                       <div className="absolute -top-2.5 -right-2.5 w-5 h-5 border-t-4 border-r-4 border-rose-500 rounded-tr-lg" />
                       <div className="absolute -bottom-2.5 -left-2.5 w-5 h-5 border-b-4 border-l-4 border-rose-500 rounded-bl-lg" />
@@ -469,7 +473,8 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
 
                     <div className="z-10 mt-2 px-3 py-0.5 bg-slate-900/90 border border-slate-700/80 rounded-full text-[10px] sm:text-[11px] font-semibold text-emerald-300 shadow-md flex items-center gap-1">
                       <span>✨</span>
-                      <span>네모 박스 안에 그린 그림을 맞춰주세요!</span>
+                      <span className="phone-only-inline">박스 안에 맞춰주세요!</span>
+                      <span className="phone-hide-inline">네모 박스 안에 그린 그림을 맞춰주세요!</span>
                     </div>
                   </div>
                 </div>
@@ -477,17 +482,20 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
 
               {/* 보조 컨트롤 (종이 감도 & 투명화 미리보기) */}
               {!cameraError && (
-                <div className="w-full max-w-md flex items-center justify-between px-3.5 py-1.5 bg-slate-800/60 rounded-xl text-xs text-slate-300 border border-slate-800 shrink-0 mt-2">
+                <div className="phone-controls-bar w-full max-w-md flex items-center justify-between px-3.5 py-1.5 bg-slate-800/60 rounded-xl text-xs text-slate-300 border border-slate-800 shrink-0 mt-2">
                   <div className="flex items-center gap-2">
-                    <Sliders className="w-3.5 h-3.5 text-slate-400" />
-                    <span className="font-medium text-slate-300">종이 감도:</span>
+                    <Sliders className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                    <span className="font-medium text-slate-300 whitespace-nowrap">
+                      <span className="phone-only-inline">감도</span>
+                      <span className="phone-hide-inline">종이 감도:</span>
+                    </span>
                     <input
                       type="range"
                       min="140"
                       max="240"
                       value={threshold}
                       onChange={(e) => setThreshold(Number(e.target.value))}
-                      className="w-20 accent-rose-500 cursor-pointer"
+                      className="phone-slider w-20 accent-rose-500 cursor-pointer"
                       title="조명 환경에 맞춰 종이 배경 감도를 조절합니다"
                     />
                     <span className="text-[11px] font-mono text-slate-400">{threshold}</span>
@@ -496,14 +504,15 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                   <button
                     type="button"
                     onClick={() => setShowLivePreview(!showLivePreview)}
-                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs transition-colors cursor-pointer ${
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs transition-colors cursor-pointer shrink-0 ${
                       showLivePreview
                         ? 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
                         : 'bg-slate-700/40 border-slate-700 text-slate-400 hover:text-white'
                     }`}
                   >
                     <Eye className="w-3 h-3" />
-                    <span>투명화 미리보기</span>
+                    <span className="phone-only-inline">미리보기</span>
+                    <span className="phone-hide-inline">투명화 미리보기</span>
                   </button>
                 </div>
               )}
@@ -516,21 +525,21 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                   type="button"
                   onClick={startCountdown}
                   disabled={isCountingDown || !!cameraError}
-                  className="flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="phone-modal-cta flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  <Camera className="w-5 h-5 text-amber-300" />
-                  <span>찰칵! 소환하기 (3초)</span>
-                  <span className="text-[11px] font-normal text-rose-200 bg-rose-800/60 px-2 py-0.5 rounded-md hidden sm:inline">Space</span>
+                  <Camera className="w-5 h-5 text-amber-300 shrink-0" />
+                  <span>찰칵! (3초)</span>
+                  <span className="phone-key-badge text-[11px] font-normal text-rose-200 bg-rose-800/60 px-2 py-0.5 rounded-md hidden sm:inline">Space</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={captureGuideArea}
                   disabled={isCountingDown || !!cameraError}
-                  className="py-3.5 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-[0.98] text-slate-200 font-bold text-xs sm:text-sm border border-slate-700 transition-colors disabled:opacity-50 cursor-pointer shrink-0"
+                  className="phone-modal-cta-sub py-3.5 px-4 rounded-2xl bg-slate-800 hover:bg-slate-700 active:scale-[0.98] text-slate-200 font-bold text-xs sm:text-sm border border-slate-700 transition-colors disabled:opacity-50 cursor-pointer shrink-0"
                   title="기다리지 않고 즉시 캡처합니다"
                 >
-                  즉시 소환
+                  <span>바로올리기</span>
                 </button>
               </div>
             </div>
@@ -539,9 +548,9 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
 
         {/* 탭 2: 크리스마스캐릭터도안 (팝업창 가득 차는 2x2 카드형 배치 + 하단 단일 소환 버튼) */}
         {activeTab === 'samples' && (
-          <div className="flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 gap-3.5">
-            {/* 4개의 이미지를 팝업창에 가득 차게 2x2 그리드로 배치 */}
-            <div className="grid grid-cols-2 gap-3.5 sm:gap-4 w-full flex-1 min-h-0">
+          <div className="phone-modal-body flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 gap-3.5">
+            {/* 4개의 이미지를 팝업창에 가득 차게 2x2 그리드로 배치 (폰 가로에서는 4열) */}
+            <div className="phone-samples-grid grid grid-cols-2 gap-3.5 sm:gap-4 w-full flex-1 min-h-0">
               {[
                 { type: 'santa' as const, label: '산타할아버지' },
                 { type: 'rudolph' as const, label: '빨간코 루돌프' },
@@ -554,14 +563,14 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                     key={item.type}
                     type="button"
                     onClick={() => setSelectedSample(item.type)}
-                    className={`relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl transition-all text-center cursor-pointer shadow-lg overflow-hidden border-2 h-full ${
+                    className={`phone-sample-card relative flex flex-col items-center justify-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-2xl transition-all text-center cursor-pointer shadow-lg overflow-hidden border-2 h-full ${
                       isSelected
                         ? 'bg-slate-800/95 border-amber-400 ring-4 ring-amber-400/30 shadow-amber-950/40 scale-[1.01]'
                         : 'bg-slate-900/60 hover:bg-slate-800/80 border-slate-700/80 hover:border-slate-600 opacity-80 hover:opacity-100'
                     }`}
                   >
                     {/* 캐릭터 이미지 (별도 내부 박스/테두리 없이 단일 카드 내에 자연스럽게 배치) */}
-                    <div className="flex-1 w-full min-h-0 flex items-center justify-center p-1.5">
+                    <div className="phone-sample-img-wrap flex-1 w-full min-h-0 flex items-center justify-center p-1.5">
                       <img
                         src={samplePreviews[item.type]}
                         alt={item.label}
@@ -571,7 +580,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
 
                     {/* 캐릭터 이름만 표시 */}
                     <span
-                      className={`text-base sm:text-lg font-black transition-colors shrink-0 ${
+                      className={`phone-sample-label text-base sm:text-lg font-black transition-colors shrink-0 ${
                         isSelected ? 'text-amber-300 drop-shadow' : 'text-slate-200'
                       }`}
                     >
@@ -587,7 +596,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
               <button
                 type="button"
                 onClick={() => handleSelectSample(selectedSample)}
-                className="w-full max-w-md py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="phone-modal-cta w-full max-w-md py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
                 <span>
@@ -607,10 +616,10 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
 
         {/* 탭 3: 화면에서 직접 그리기 */}
         {activeTab === 'draw' && (
-          <div className="flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 gap-3.5">
+          <div className="phone-modal-body flex-1 min-h-0 flex flex-col justify-between p-4 sm:p-5 gap-3.5">
             {/* 메인 스테이지 */}
-            <div className="w-full flex-1 min-h-0 flex flex-col items-center justify-center">
-              <div className="relative border-2 border-slate-700/80 rounded-2xl overflow-hidden shadow-xl bg-white flex items-center justify-center">
+            <div className="phone-landscape-row w-full flex-1 min-h-0 flex flex-col items-center justify-center">
+              <div className="relative border-2 border-slate-700/80 rounded-2xl overflow-hidden shadow-xl bg-white flex items-center justify-center max-w-full">
                 <canvas
                   ref={drawCanvasRef}
                   width={420}
@@ -619,12 +628,12 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                   onPointerMove={handleDrawMove}
                   onPointerUp={handleDrawEnd}
                   onPointerLeave={handleDrawEnd}
-                  className="cursor-crosshair touch-none w-[340px] sm:w-[420px] h-[210px] sm:h-[240px] object-contain"
+                  className="phone-draw-canvas cursor-crosshair touch-none w-[340px] sm:w-[420px] h-[210px] sm:h-[240px] object-contain"
                 />
               </div>
 
               {/* 도구 모음 (색상 선택 및 지우기) - 웹캠 탭과 동일한 너비와 패딩 */}
-              <div className="w-full max-w-md flex items-center justify-between px-3.5 py-1.5 bg-slate-800/60 rounded-xl text-xs text-slate-300 border border-slate-800 shrink-0 mt-2">
+              <div className="phone-controls-bar w-full max-w-md flex items-center justify-between px-3.5 py-1.5 bg-slate-800/60 rounded-xl text-xs text-slate-300 border border-slate-800 shrink-0 mt-2">
                 <div className="flex items-center gap-2">
                   <span className="font-medium text-slate-300 text-xs hidden sm:inline">색상:</span>
                   <div className="flex items-center gap-1.5">
@@ -634,7 +643,7 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
                         type="button"
                         onClick={() => setDrawColor(c)}
                         style={{ backgroundColor: c }}
-                        className={`w-6 h-6 rounded-full border-2 transition-transform cursor-pointer ${
+                        className={`phone-color-dot w-6 h-6 rounded-full border-2 transition-transform cursor-pointer ${
                           drawColor === c ? 'border-amber-400 scale-125 shadow-md' : 'border-slate-700 hover:scale-110'
                         }`}
                       />
@@ -661,10 +670,11 @@ export const CameraModal: React.FC<CameraModalProps> = ({ isOpen, onClose, onCap
               <button
                 type="button"
                 onClick={handleSummonDrawn}
-                className="w-full max-w-md py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="phone-modal-cta w-full max-w-md py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-red-500 to-rose-600 hover:from-rose-500 hover:to-red-400 active:scale-[0.98] text-white font-extrabold text-sm sm:text-base shadow-xl shadow-rose-950/50 border border-rose-400/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
-                <span>내가 그린 그림 소환하기</span>
+                <span className="phone-only-inline">소환하기</span>
+                <span className="phone-hide-inline">내가 그린 그림 소환하기</span>
               </button>
             </div>
           </div>

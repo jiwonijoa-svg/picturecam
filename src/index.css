@@ -15,3 +15,325 @@
 .animate-fade-in {
   animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+.phone-summon-label-mobile,
+.phone-only-inline {
+  display: none;
+}
+
+/* 폰 화면(세로 < 640px 또는 폰 가로 모드)에서만 헤더·모달 크기·문구·배열 최적화 */
+@media (max-width: 639px), ((max-height: 500px) and (max-width: 960px)) {
+  .phone-header {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+  .phone-title-card {
+    padding: 0.45rem 0.7rem;
+    gap: 0.375rem;
+    border-radius: 0.875rem;
+  }
+  .phone-title-emoji {
+    font-size: 1.125rem;
+    line-height: 1.25;
+  }
+  .phone-title-text {
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .phone-actions {
+    gap: 0.375rem;
+  }
+  .phone-summon-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 0.875rem;
+    gap: 0.375rem;
+  }
+  .phone-summon-label-desktop,
+  .phone-key-badge,
+  .phone-btn-label,
+  .phone-hide-inline {
+    display: none;
+  }
+  .phone-summon-label-mobile,
+  .phone-only-inline {
+    display: inline;
+    white-space: nowrap;
+  }
+  .phone-icon-btn {
+    padding: 0.55rem;
+    border-radius: 0.875rem;
+  }
+
+  /* 모달 팝업 폰 전용 간략화 및 컴팩트 사이즈 */
+  .phone-modal-backdrop {
+    padding: 0.625rem;
+  }
+  .phone-modal-card {
+    height: auto;
+    max-height: 92dvh;
+    border-radius: 1.25rem;
+  }
+  .phone-modal-header {
+    padding: 0.625rem 0.875rem;
+    gap: 0.5rem;
+  }
+  .phone-modal-title-wrap {
+    order: 1;
+    gap: 0.375rem;
+  }
+  .phone-modal-title-emoji {
+    font-size: 1rem;
+  }
+  .phone-modal-title {
+    font-size: 0.9375rem;
+  }
+  .phone-modal-close {
+    order: 2;
+    padding: 0.375rem;
+  }
+  .phone-modal-tabs {
+    order: 3;
+    padding: 0.2rem;
+    gap: 0.25rem;
+    border-radius: 0.75rem;
+  }
+  .phone-modal-tab-btn {
+    justify-content: center;
+    padding: 0.45rem 0.5rem;
+    font-size: 0.75rem;
+    gap: 0.25rem;
+    white-space: nowrap;
+  }
+  .phone-modal-namebar {
+    padding: 0.5rem 0.875rem;
+    gap: 0.5rem;
+  }
+  .phone-modal-name-label {
+    font-size: 0.8125rem;
+  }
+  .phone-modal-name-wrap {
+    width: 11rem;
+  }
+  .phone-modal-name-input {
+    padding: 0.375rem 1.75rem 0.375rem 0.625rem;
+    font-size: 0.8125rem;
+  }
+  .phone-modal-body {
+    padding: 0.75rem;
+    gap: 0.625rem;
+    overflow-y: auto;
+  }
+  .phone-camera-box {
+    max-width: 215px;
+  }
+  .phone-camera-guide {
+    width: 9.25rem;
+    height: 9.25rem;
+  }
+  .phone-controls-bar {
+    padding: 0.4rem 0.625rem;
+    margin-top: 0.5rem;
+    gap: 0.5rem;
+  }
+  .phone-slider {
+    width: 4.25rem;
+  }
+  .phone-modal-cta {
+    padding: 0.65rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.875rem;
+  }
+  .phone-modal-cta-sub {
+    padding: 0.65rem 0.875rem;
+    font-size: 0.75rem;
+    border-radius: 0.875rem;
+  }
+  .phone-samples-grid {
+    gap: 0.625rem;
+  }
+  .phone-sample-card {
+    padding: 0.625rem;
+    gap: 0.375rem;
+    border-radius: 1rem;
+  }
+  .phone-sample-img-wrap {
+    padding: 0.125rem;
+    max-height: 6.5rem;
+  }
+  .phone-sample-label {
+    font-size: 0.8125rem;
+  }
+  .phone-draw-canvas {
+    width: 100%;
+    max-width: 310px;
+    height: auto;
+    aspect-ratio: 420 / 260;
+  }
+  .phone-color-dot {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/* 폰 세로 화면: 헤더 아래에 3등분 탭 바 배치 */
+@media (max-width: 639px) {
+  .phone-modal-header {
+    flex-wrap: wrap;
+  }
+  .phone-modal-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 폰 가로 화면: 세로 높이가 낮으므로 가로로 넓게 배치 */
+@media (max-height: 500px) and (max-width: 960px) {
+  .phone-modal-card {
+    height: 94dvh;
+    max-height: 94dvh;
+  }
+  .phone-modal-header {
+    flex-wrap: nowrap;
+    padding: 0.45rem 0.75rem;
+  }
+  .phone-modal-tabs {
+    order: 2;
+    width: auto;
+    display: flex;
+  }
+  .phone-modal-close {
+    order: 3;
+  }
+  .phone-modal-namebar {
+    padding: 0.35rem 0.75rem;
+  }
+  .phone-modal-body {
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+  }
+  .phone-landscape-row {
+    flex-direction: row;
+    gap: 0.875rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .phone-camera-box {
+    max-width: 155px;
+  }
+  .phone-camera-guide {
+    width: 6.75rem;
+    height: 6.75rem;
+  }
+  .phone-samples-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+  .phone-sample-img-wrap {
+    max-height: 5.5rem;
+  }
+  .phone-draw-canvas {
+    max-width: 240px;
+  }
+  .phone-landscape-row .phone-controls-bar {
+    flex: 1;
+    min-width: 0;
+    max-width: 20rem;
+    margin-top: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* 태블릿 세로 화면(640px ~ 1024px, portrait)에서만 제목·메뉴 사이즈 및 간략화 최적화 */
+@media (min-width: 640px) and (max-width: 1024px) and (orientation: portrait) {
+  .phone-header {
+    padding: 0.875rem 1.25rem;
+    gap: 0.75rem;
+  }
+  .phone-title-card {
+    padding: 0.55rem 0.9rem;
+    gap: 0.5rem;
+    border-radius: 1rem;
+  }
+  .phone-title-emoji {
+    font-size: 1.375rem;
+    line-height: 1.2;
+  }
+  .phone-title-text {
+    font-size: 1.0625rem;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  .phone-actions {
+    gap: 0.45rem;
+    flex-shrink: 0;
+  }
+  .phone-key-badge {
+    display: none;
+  }
+  .phone-summon-btn {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.8125rem;
+    border-radius: 0.95rem;
+    gap: 0.375rem;
+    white-space: nowrap;
+  }
+  .phone-icon-btn {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 0.95rem;
+    white-space: nowrap;
+  }
+  .phone-icon-btn:last-child {
+    padding: 0.55rem;
+  }
+
+  /* 모달 팝업 헤더·탭도 태블릿 세로폭에 맞춰 한 줄로 깔끔하게 정렬 */
+  .phone-modal-header {
+    padding: 0.875rem 1.125rem;
+    gap: 0.5rem;
+  }
+  .phone-modal-title-emoji {
+    font-size: 1.125rem;
+  }
+  .phone-modal-title {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .phone-modal-tabs {
+    padding: 0.2rem;
+    gap: 0.2rem;
+  }
+  .phone-modal-tab-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  .phone-modal-close {
+    padding: 0.4rem;
+  }
+}
+
+/* 소형 태블릿 세로 화면(640px ~ 767px, portrait)에서는 보조 버튼 텍스트까지 간략화 */
+@media (min-width: 640px) and (max-width: 767px) and (orientation: portrait) {
+  .phone-header {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+  .phone-title-card {
+    padding: 0.5rem 0.75rem;
+  }
+  .phone-title-text {
+    font-size: 0.9375rem;
+  }
+  .phone-btn-label {
+    display: none;
+  }
+  .phone-icon-btn {
+    padding: 0.55rem;
+  }
+}
+

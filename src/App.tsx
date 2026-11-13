@@ -155,11 +155,11 @@ export default function App() {
       />
 
       {/* 2. 상단 헤더 및 조작 바 */}
-      <header className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between gap-4 px-6 py-4 pointer-events-none">
+      <header className="phone-header absolute top-0 left-0 right-0 z-30 flex items-center justify-between gap-4 px-6 py-4 pointer-events-none">
         {/* 좌측: 타이틀 (크게 강조) */}
-        <div className="flex items-center gap-3.5 pointer-events-auto bg-slate-900/85 backdrop-blur-md px-5 py-3 rounded-2xl border border-slate-700/60 shadow-xl">
-          <span className="text-3xl animate-bounce">🎄</span>
-          <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center">
+        <div className="phone-title-card flex items-center gap-3.5 pointer-events-auto bg-slate-900/85 backdrop-blur-md px-5 py-3 rounded-2xl border border-slate-700/60 shadow-xl">
+          <span className="phone-title-emoji text-3xl animate-bounce">🎄</span>
+          <h1 className="phone-title-text text-xl sm:text-2xl font-black tracking-tight text-white flex items-center">
             <span className="bg-gradient-to-r from-amber-200 via-rose-100 to-amber-100 bg-clip-text text-transparent drop-shadow-sm">
               빛나는 크리스마스 마을
             </span>
@@ -167,16 +167,17 @@ export default function App() {
         </div>
 
         {/* 우측 액션 버튼들 */}
-        <div className="flex items-center gap-2.5 pointer-events-auto">
+        <div className="phone-actions flex items-center gap-2.5 pointer-events-auto">
           {/* 그림 소환하기 버튼 (주요 액션) */}
           <button
             onClick={() => setIsCameraOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-600 to-red-500 hover:from-rose-500 hover:to-red-400 active:scale-95 text-white text-sm font-bold rounded-2xl shadow-lg shadow-rose-950/40 border border-rose-400/30 transition-all cursor-pointer"
+            className="phone-summon-btn flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-rose-600 to-red-500 hover:from-rose-500 hover:to-red-400 active:scale-95 text-white text-sm font-bold rounded-2xl shadow-lg shadow-rose-950/40 border border-rose-400/30 transition-all cursor-pointer"
             title="웹캠으로 그린 그림을 소환합니다 (단축키: 스페이스바)"
           >
-            <Camera className="w-4 h-4" />
-            <span>그림 소환하기</span>
-            <span className="text-[10px] font-semibold bg-white/20 px-1.5 py-0.5 rounded-md hidden sm:inline">
+            <Camera className="w-4 h-4 shrink-0" />
+            <span className="phone-summon-label-mobile">그림올리기</span>
+            <span className="phone-summon-label-desktop">그림올리기</span>
+            <span className="phone-key-badge text-[10px] font-semibold bg-white/20 px-1.5 py-0.5 rounded-md">
               Space
             </span>
           </button>
@@ -184,7 +185,7 @@ export default function App() {
           {/* BGM ON/OFF 버튼 */}
           <button
             onClick={handleToggleBgm}
-            className={`flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl border backdrop-blur-md transition-all cursor-pointer text-xs font-semibold ${
+            className={`phone-icon-btn flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl border backdrop-blur-md transition-all cursor-pointer text-xs font-semibold ${
               isBgmOn
                 ? 'bg-emerald-600/90 hover:bg-emerald-500 border-emerald-400/40 text-white shadow-lg shadow-emerald-950/30'
                 : 'bg-slate-900/80 hover:bg-slate-800 border-slate-700/60 text-slate-300'
@@ -192,24 +193,24 @@ export default function App() {
             title="캐롤 실로폰 BGM 켜기/끄기"
           >
             {isBgmOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
-            <span className="hidden sm:inline">BGM {isBgmOn ? 'ON' : 'OFF'}</span>
+            <span className="phone-btn-label">BGM {isBgmOn ? 'ON' : 'OFF'}</span>
           </button>
 
           {/* 마을 청소 버튼 */}
           <button
             onClick={() => setIsCleanModalOpen(true)}
             disabled={activeCount === 0}
-            className="flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-900/80 hover:bg-rose-950/50 border border-slate-700/60 hover:border-rose-700/60 text-slate-300 hover:text-rose-200 rounded-2xl backdrop-blur-md transition-all cursor-pointer text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+            className="phone-icon-btn flex items-center gap-1.5 px-3.5 py-2.5 bg-slate-900/80 hover:bg-rose-950/50 border border-slate-700/60 hover:border-rose-700/60 text-slate-300 hover:text-rose-200 rounded-2xl backdrop-blur-md transition-all cursor-pointer text-xs font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
             title="모든 캐릭터를 눈꽃으로 초기화"
           >
             <Trash2 className="w-4 h-4" />
-            <span className="hidden sm:inline">마을 청소</span>
+            <span className="phone-btn-label">마을비우기</span>
           </button>
 
           {/* 도움말 안내 버튼 */}
           <button
             onClick={() => setIsHelpOpen(true)}
-            className="p-2.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-slate-400 hover:text-white rounded-2xl backdrop-blur-md transition-all cursor-pointer"
+            className="phone-icon-btn p-2.5 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-slate-400 hover:text-white rounded-2xl backdrop-blur-md transition-all cursor-pointer"
             title="체험 부스 이용 가이드"
           >
             <HelpCircle className="w-4 h-4" />

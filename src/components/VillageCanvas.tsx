@@ -86,6 +86,18 @@ const GREETINGS = [
   '✨ 내가 그린 그림이 살아났어!',
 ];
 
+// 폰 화면(세로 < 640px 또는 폰 가로 모드)에서만 캐릭터 크기를 세로 50% 수준으로 축소
+const getPhoneCharScale = (charH: number, viewW: number, viewH: number): number => {
+  const isPhone = viewW < 640 || (viewW <= 960 && viewH <= 500);
+  if (!isPhone) return 1.0;
+  const halfScale = 0.5;
+  const maxAllowedH = viewH * 0.48;
+  if (charH * halfScale > maxAllowedH) {
+    return maxAllowedH / Math.max(1, charH);
+  }
+  return halfScale;
+};
+
 export const VillageCanvas: React.FC<VillageCanvasProps> = ({
   characters,
   onCharacterClick,
@@ -386,8 +398,9 @@ export const VillageCanvas: React.FC<VillageCanvasProps> = ({
 
       // B. 물리 시뮬레이션 루프
       chars.forEach((c) => {
-        const currentScale = c.depthScale ?? 1.0;
-        const currentYOffset = c.depthYOffset ?? 0;
+        const phoneScale = getPhoneCharScale(c.height, width, height);
+        const currentScale = (c.depthScale ?? 1.0) * phoneScale;
+        const currentYOffset = (c.depthYOffset ?? 0) * phoneScale;
         const rawGroundY = getGroundY(c.x, width, height);
 
         // 원근 스케일 및 뒤로 물러난 Y 오프셋을 반영한 지면 착지 좌표
@@ -451,8 +464,21 @@ export const VillageCanvas: React.FC<VillageCanvasProps> = ({
           c.wobbleAngle = Math.sin(c.walkStep) * 0.14;
           c.bounceOffset = Math.abs(Math.sin(c.walkStep * 2)) * (6 * currentScale);
 
+          const isPhone = width < 640 || (width <= 960 && height <= 500);
           c.vy += 32 * dt;
-          c.y += c.vy;
+          c.y += isPhone ? c.vy * (dt * 60) : c.vy;
+
+          if (isPhone) {
+            // 폰 화면에서는 점프 시 캐릭터(이름표/말풍선 포함)가 화면 상단 밖으로 나가지 않도록 천장 제한
+            const topClearance = height <= 500 ? 58 : 74;
+            const minSafeY = Math.min(groundY, topClearance + (c.height * currentScale) * 0.5 + 24);
+            if (c.y < minSafeY) {
+              c.y = minSafeY;
+              if (c.vy < 0) {
+                c.vy = 0;
+              }
+            }
+          }
 
           if (c.y >= groundY) {
             c.y = groundY;
@@ -516,7 +542,9 @@ export const VillageCanvas: React.FC<VillageCanvasProps> = ({
       sortedChars.forEach((c) => {
         ctx.save();
 
-        const currentScale = c.depthScale ?? 1.0;
+        const phoneScale = getPhoneCharScale(c.height, width, height);
+        const depthScale = c.depthScale ?? 1.0;
+        const currentScale = depthScale * phoneScale;
         let renderScale = currentScale;
         let renderAlpha = 1.0;
 
@@ -530,7 +558,7 @@ export const VillageCanvas: React.FC<VillageCanvasProps> = ({
 
         // 뒤로 물러난 캐릭터는 살짝 부드러운 공기 원근감(소프트 알파) 부여
         if (!c.isNewest) {
-          renderAlpha *= Math.max(0.85, 0.70 + currentScale * 0.30);
+          renderAlpha *= Math.max(0.85, 0.70 + depthScale * 0.30);
         }
 
         ctx.globalAlpha = renderAlpha;
@@ -725,7 +753,8 @@ export const VillageCanvas: React.FC<VillageCanvasProps> = ({
     for (const c of sortedForClick) {
       if (c.state === 'dissolving' || c.state === 'spawning') continue;
 
-      const scale = c.depthScale ?? 1.0;
+      const phoneScale = getPhoneCharScale(c.height, rect.width, rect.height);
+      const scale = (c.depthScale ?? 1.0) * phoneScale;
       const halfW = (c.width * scale) * 0.55;
       const halfH = (c.height * scale) * 0.55;
       const charCenterY = c.y - c.bounceOffset;
@@ -737,8 +766,13 @@ export const VillageCanvas: React.FC<VillageCanvasProps> = ({
         clickY <= charCenterY + halfH
       ) {
         // 캐릭터 점프 트리거!
+        const isPhone = rect.width < 640 || (rect.width <= 960 && rect.height <= 500);
         c.state = 'jumping';
-        c.vy = -12.5; // 위로 뿅! 높게 점프
+        if (isPhone) {
+          c.vy = -Math.min(10.0, Math.max(7.8, rect.height * 0.015));
+        } else {
+          c.vy = -12.5; // 위로 뿅! 높게 점프
+        }
 
         // 사운드 재생 (보잉 효과음)
         soundEngine.playBoing();
